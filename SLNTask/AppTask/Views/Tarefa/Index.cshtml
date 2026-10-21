@@ -27,6 +27,35 @@
         @foreach (var item in Model)
         {
             <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descricao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataPlanejada)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataIniciada)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataFinalizada)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataCancelada)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StatusTarefa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Prazo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Funcionario.Nome)
+                </td>
+                <td>
+                    <a href="/Tarefa/Edit/@item.Codigo" class="btn btn-primary btn-sm">Alterar</a>
+                    <a href="/Tarefa/Details/@item.Codigo" class="btn btn-success btn-sm">Detalhe</a>
+                    <button type="button"
+                            class="btn btn-danger btn-sm"
                 <td>@item.Descricao</td>
                 <td>@item.DataPlanejada</td>
                 <td>@item.DataIniciada</td>
@@ -43,6 +72,8 @@
                             data-bs-target="#deleteModal"
                             data-id="@item.Codigo"
                             data-descricao="@item.Descricao">
+                        Excluir
+                    </button>
                         Delete
                     </button>
 
@@ -64,6 +95,7 @@
                 Deseja realmente excluir a tarefa: <strong id="tarefaDescricao"></strong>?
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <button type="button" class="modal-btn-cancel btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <!-- Formulário que dispara o POST de Delete para a Controller -->
                 <form id="deleteForm" method="post" action="">
@@ -74,6 +106,18 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        var deleteModal = document.getElementById('deleteModal');
+        deleteModal.addEventListener('show.bs.modal', function (event) {
+            var button = event.relatedTarget;
+
+            var id = button.getAttribute('data-id');
+            var descricao = button.getAttribute('data-descricao');
+
+            var modalDescricao = deleteModal.querySelector('#tarefaDescricao');
+            modalDescricao.textContent = descricao;
 @section Scripts {
     <script>
         // Captura o evento de abertura do modal e preenche os dados dinamicamente
@@ -90,4 +134,5 @@
             deleteForm.action = '/Tarefa/Delete/' + id;
         });
     </script>
+}
 }
